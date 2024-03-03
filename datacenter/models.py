@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.timezone import localtime, now
-import time
 
 
 class Passcard(models.Model):
@@ -42,7 +41,3 @@ class Visit(models.Model):
         duration_in_seconds = self.get_duration()
         duration_in_minutes = round(duration_in_seconds / 60)
         return duration_in_minutes > minutes
-
-
-def format_duration(duration, time_format):
-    return time.strftime(time_format, time.gmtime(duration))
