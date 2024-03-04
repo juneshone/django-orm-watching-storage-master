@@ -1,28 +1,30 @@
 import os
-from dotenv import load_dotenv
+from environs import Env
 
-load_dotenv()
+
+env = Env()
+env.read_env()
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ['ENGINE'],
-        'HOST': os.environ['HOST'],
-        'PORT': os.environ['PORT'],
-        'NAME': os.environ['NAME'],
-        'USER': os.environ['USER'],
-        'PASSWORD': os.environ['PASSWORD'],
+        'ENGINE': env.str('DATABASES_ENGINE'),
+        'HOST': env('DATABASES_HOST'),
+        'PORT': env.int('DATABASES_PORT'),
+        'NAME': env.str('DATABASES_NAME'),
+        'USER': env.str('DATABASES_USER'),
+        'PASSWORD': env.str('DATABASES_PASSWORD'),
     }
 }
 
 INSTALLED_APPS = ['datacenter']
 
-SECRET_KEY = 'REPLACE_ME'
+SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = True
+DEBUG = env.bool("DEBUG_VALUE", False)
 
 ROOT_URLCONF = 'project.urls'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=["*"])
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
